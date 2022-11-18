@@ -16,7 +16,7 @@ namespace AzureExample.AzureFunction
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest request,
             ILogger logger)
         {
-            logger.LogInformation("C# HTTP trigger function processed a request.");
+            logger.LogInformation($"{nameof(HttpTriggerExampleFunction)}. C# HTTP trigger function processed a request.");
 
             string name = request.Query["name"];
 
