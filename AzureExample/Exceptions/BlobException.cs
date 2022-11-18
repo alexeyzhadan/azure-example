@@ -2,21 +2,20 @@
 {
     public class BlobException : Exception
     {
-        public string Title { get; }
+        private const string TITLE = "Azure Blob issue";
 
-        public BlobException()
-            : base()
-        {
-        }
+        public string Title { get; }
 
         public BlobException(string message)
             : base(message)
         {
+            Title = TITLE;
         }
 
         public BlobException(string message, Exception innerException)
             : base(message, innerException)
         {
+            Title = TITLE;
         }
 
         public BlobException(string title, string message)

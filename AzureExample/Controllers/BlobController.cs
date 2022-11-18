@@ -13,24 +13,28 @@ namespace AzureExample.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetBlobsAsync(CancellationToken cancellationToken)
+        public async Task<IActionResult> GetMedia(CancellationToken cancellationToken)
         {
-            var blobs = await blobService.GetBlobsAsync(cancellationToken);
+            var blobs = await blobService.GetMediaAsync(cancellationToken);
 
             return Ok(blobs);
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadMediaFileAsync(IFormFile file, CancellationToken cancellationToken)
+        public async Task<IActionResult> UploadMedia([FromForm] IFormFile file, CancellationToken cancellationToken)
         {
             if (file == null)
             { 
                 return BadRequest();
             }
 
-            var blob = await blobService.UploadMediaAsync(file, cancellationToken);
+            var result = await blobService.UploadMediaAsync(file, cancellationToken);
+            if (!result.Success)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
 
-            return Ok(blob);
+            return Ok();
         }
     }
 }
