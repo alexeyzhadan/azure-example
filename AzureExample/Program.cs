@@ -1,4 +1,5 @@
 using AzureExample.Configurations;
+using AzureExample.Middlewares;
 using AzureExample.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,8 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.Configure<MediaBlobStorageSettings>(
-    builder.Configuration.GetSection("StorageAccount:MediaBlobStorage"));
+builder.Services.Configure<ApplicationSettings>(
+    builder.Configuration.GetSection(ApplicationSettings.SectionKey));
+builder.Services.Configure<BlobStorageSettings>(
+    builder.Configuration.GetSection(BlobStorageSettings.SectionKey));
 
 builder.Services.AddTransient<BlobService>();
 
@@ -19,6 +22,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
 }
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 
