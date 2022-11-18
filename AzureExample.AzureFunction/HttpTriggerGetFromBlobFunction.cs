@@ -15,11 +15,11 @@ namespace AzureExample.AzureFunction
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "HttpTriggerGetFromBlobFunction/{fileName}")] HttpRequest request,
             [Blob("media", Connection = "AzureWebJobsStorage")] BlobContainerClient mediaContainer,
-            ILogger log,
+            ILogger logger,
             string fileName,
             CancellationToken cancellationToken)
         {
-            log.LogInformation($"{nameof(HttpTriggerGetFromBlobFunction)}. C# HTTP trigger function processed a request.");
+            logger.LogInformation($"{nameof(HttpTriggerGetFromBlobFunction)}. C# HTTP trigger function processed a request.");
 
             if (await mediaContainer.ExistsAsync(cancellationToken))
             {
